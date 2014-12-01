@@ -81,10 +81,12 @@
          
             include 'modUtilities.php';
 
+            $intTotal = "";
+            
             // Non-procedurized piece of code at the top.
             if (IsValidData( ) == true )
             {
-                DoCalculations( );
+               $intTotal = DoCalculations( );
             }
 
 
@@ -98,10 +100,12 @@
                 $intValue1 = GetFormValue( "txtValue1", "" );
                 $intValue2 = GetFormValue( "txtValue2", "" );
                 
+                // echo "Value 1 = '" . $intValue1 . "'<br />\n";
+                
                 // Get the value of the textbox's and combobox
                 $blnIsValidData = true;
                 $strErrorValues = "Server says, Please correct the following error(s): " . '\n';
-
+                
                 // txtValue1
                 if ( empty($intValue1) == false )
                 {
@@ -126,7 +130,7 @@
                 if ($blnIsValidData == false)
                 {
                     //SendMessageToClient( $strErrorValues );
-                    echo "<script type='text/javascript'>alert('" . $strErrorValues . "');</script>";
+                    echo "<script type='text/javascript'>alert('$strErrorValues');</script>";
                 }               
 
                 return $blnIsValidData;
@@ -142,24 +146,23 @@
             {       
                 $intValue1 = GetFormValue( "txtValue1", "" );
                 $intOperation = GetFormValue("cmbOperation", "");
-                $intValue2 = GetFormValue( "txtValue2", "" );                
+                $intValue2 = GetFormValue( "txtValue2", "" ); 
+                $intTotal = "";
+                
                 if ( empty($intValue2) == false || $intValue2 == '0' ) 
                 {
                     switch ($intOperation)
                     {
                         case 1: 
                             $intTotal = $intValue1 + $intValue2;
-                            echo $intTotal;
                             break;
 
                         case 2: 
                             $intTotal = $intValue1 - $intValue2;               
-                            echo $intTotal;
                             break;
 
                         case 3: 
                             $intTotal = $intValue1 * $intValue2;               
-                            echo $intTotal;
                         break;
 
                         case 4: 
@@ -172,9 +175,10 @@
                         {
                             $strMessage = "Only Chuck Norris can divide by zero, broseph!!!";			
                             echo "<script type='text/javascript'>alert('$strMessage');</script>";
-                        }  
+                        }    
                     }
                 }
+                return $intTotal;                
             }
         ?>
         
@@ -190,9 +194,9 @@
             {
                 var frmSimpleCalculator = document.getElementById("frmSimpleCalculator");
 
-                frmSimpleCalculator.txtValue1.value = "<?php echo $intValue1 ?>";
-                frmSimpleCalculator.cmbOperation.value = "<?php echo $intOperation ?>";
-                frmSimpleCalculator.txtValue2.value = "<?php echo $intValue2 ?>";
+                frmSimpleCalculator.txtValue1.value = "<?php echo GetFormValue( "txtValue1", "" ) ?>";
+                frmSimpleCalculator.cmbOperation.value = "<?php echo GetFormValue( "cmbOperation", "" ) ?>";
+                frmSimpleCalculator.txtValue2.value = "<?php echo GetFormValue( "txtValue2", "" ) ?>";
                 frmSimpleCalculator.txtTotal.value = "<?php echo $intTotal ?>";				
             }
 
@@ -291,7 +295,7 @@
         <div class="BlackBar"> Homework#6 - Come to the Server Side </div>
         <br />
 
-        <form name="frmSimpleCalculator" id="frmSimpleCalculator" action="Homework6Step1.php" method="get">
+        <form name="frmSimpleCalculator" id="frmSimpleCalculator" action="Homework6Step1.php" method="post">
 
             <fieldset>
 

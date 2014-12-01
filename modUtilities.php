@@ -7,7 +7,6 @@
     //-------------------------------------------------------------------
     function GetFormValue( $strFormVariableName, $strDefaultValue )
     {
-
         $strResult = "";
 
         //Does the variable have a value?
@@ -26,7 +25,9 @@
             $strResult = $strDefaultValue;
 
         }
-
+        
+        //echo "Variable Name: '" . $strFormVariableName . "', Value = '" . $strResult . "'<br />\n";
+        
         return $strResult;
 
     }
